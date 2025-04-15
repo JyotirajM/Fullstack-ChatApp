@@ -1,121 +1,121 @@
-# Full Stack ChatApp - DevOps Engineer Setup
+# 🚀 Fullstack Chat App – DevOps Deployment
 
-[![GitHub Profile](https://img.shields.io/badge/GitHub-JyotirajM-purple?logo=github&style=flat)](https://github.com/JyotirajM)
-![Docker Image](https://img.shields.io/github/forks/JyotirajM/Fullstack-ChatApp)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-JyotirajM-blue?logo=github)](https://github.com/JyotirajM/Fullstack-ChatApp)
 
-## 📝 **Introduction**
+## 💡 Overview
 
-This repository contains a Full Stack Chat Application that is designed for scalability, maintainability, and high availability using modern DevOps practices and tools. The application includes real-time messaging, user authentication, and a modern UI built with **React** and **Node.js**.
+This is a **production-ready fullstack chat application** deployed using modern DevOps tools. It features real-time messaging and includes containerization, orchestration, monitoring, and CI/CD pipelines.
 
-## 🚀 **DevOps Setup**
-
-As part of the DevOps lifecycle, this project implements CI/CD pipelines, containerization, orchestration, monitoring, and logging to ensure smooth deployment and high availability.
-
-### 🛠️ **Tech Stack**
-- **Backend**: Node.js, Express, MongoDB, Socket.io
-- **Frontend**: React, TailwindCSS
-- **Containerization**: Docker
-- **Orchestration**: Kubernetes
-- **CI/CD**: Jenkins (for automating builds and deployments)
-- **Version Control**: Git/GitHub
-- **Monitoring**: Prometheus
-- **Logging**: ELK Stack (planned)
-- **Cloud Deployment**: AWS (Planned)
-
-## 🔧 **Tools and Technologies**
-This project utilizes several DevOps tools to improve the application’s lifecycle and deployment.
-
-### **Version Control**: 
-- **Git**: Source code management using Git and GitHub for version control.
-  
-### **Continuous Integration / Continuous Deployment (CI/CD)**:
-- **Jenkins**: For automating the build, test, and deployment process. This ensures that code changes are continuously integrated and deployed.
-
-### **Containerization**:
-- **Docker**: Used for containerizing both the backend and frontend applications for portability across environments.
-  
-### **Orchestration**:
-- **Kubernetes**: Used to deploy, scale, and manage containerized applications across a cluster of machines. Kubernetes ensures the application's high availability and automatic scaling.
-
-### **Monitoring & Logging**:
-- **Prometheus**: Used for collecting metrics and monitoring the health of the application.
-- **ELK Stack** (Planned): For centralized logging to monitor application logs in real-time.
+> Built & deployed by **Jyotiraj Aditinandan Mahanta**
 
 ---
 
-## 🏗️ **Build and Run the Application**
+## 🛠 Tech Stack
 
-1. **Clone the Repository**:
-    ```bash
-    git clone https://github.com/JyotirajM/Fullstack-ChatApp.git
-    ```
-
-2. **Docker Setup**:
-    - Navigate to the project directory:
-      ```bash
-      cd Fullstack-ChatApp
-      ```
-
-    - **Build & Run the Containers** using Docker Compose:
-      ```bash
-      docker-compose up -d --build
-      ```
-
-3. **Access the Application**:
-    - Open your browser and go to [http://localhost](http://localhost) to access the application.
+- **Frontend:** React, TailwindCSS, DaisyUI
+- **Backend:** Node.js, Express, Socket.io
+- **Database:** MongoDB
+- **State Management:** Zustand
 
 ---
 
-## 📜 **CI/CD Pipeline Configuration with Jenkins**
+## ⚙️ DevOps & Cloud Tooling
 
-### **Jenkins Pipeline**
+| Purpose              | Tool/Tech             |
+|----------------------|-----------------------|
+| Containerization     | Docker                |
+| Orchestration        | Kubernetes            |
+| Monitoring           | Prometheus + Node Exporter |
+| Web Server           | Nginx                 |
+| CI/CD Pipeline       | Jenkins, GitHub Actions |
+| Version Control      | Git, GitHub           |
 
-The **Jenkinsfile** contains the pipeline stages to automate the build, test, and deployment process.
+---
 
-#### Key Stages:
-1. **Build**: This stage will compile the code and create Docker images for the frontend and backend applications.
-2. **Test**: Automated unit and integration tests will be run on the code.
-3. **Deploy**: Once tests pass, the Docker images are pushed to a Docker registry (e.g., Docker Hub) and then deployed to the cloud or a staging environment.
+## 📦 Project Structure
 
-#### Jenkinsfile Example:
+```bash
+Fullstack-ChatApp/
+├── backend/
+│   └── Dockerfile
+├── frontend/
+│   └── Dockerfile
+├── k8s/
+│   └── all K8s manifests (deployment, service, ingress)
+├── prometheus/
+│   └── prometheus.yml (scrape configs)
+└── docker-compose.yml
+```
+## 🚀 Local Setup
 
-```groovy
-pipeline {
-    agent any
-    environment {
-        DOCKER_IMAGE_BACKEND = 'your_dockerhub_account/full-stack-backend'
-        DOCKER_IMAGE_FRONTEND = 'your_dockerhub_account/full-stack-frontend'
-    }
-    stages {
-        stage('Build') {
-            steps {
-                script {
-                    sh 'docker-compose build'
-                }
-            }
-        }
-        stage('Test') {
-            steps {
-                script {
-                    sh 'npm test'
-                }
-            }
-        }
-        stage('Push Docker Images') {
-            steps {
-                script {
-                    sh 'docker push $DOCKER_IMAGE_BACKEND'
-                    sh 'docker push $DOCKER_IMAGE_FRONTEND'
-                }
-            }
-        }
-        stage('Deploy') {
-            steps {
-                script {
-                    sh 'kubectl apply -f k8s/deployment.yml'
-                    sh 'kubectl apply -f k8s/service.yml'
-                }
-            }
-        }
-    }
-}
+🐳 Docker Compose (Quick Local Launch)
+```bash
+git clone https://github.com/JyotirajM/Fullstack-ChatApp.git
+cd Fullstack-ChatApp
+docker-compose up -d --build
+```
+- Frontend: http://localhost:5173
+
+- Backend API: http://localhost:5001
+
+- MongoDB: localhost:27017
+
+## ☸️ Kubernetes Setup
+```bash
+kubectl apply -f k8s/
+```
+Includes:
+
+- `Deployment` & `Service` for frontend and backend
+
+- `ConfigMap` and `Secrets` (if needed)
+
+- Ingress support (Nginx)
+
+- Prometheus metrics endpoint
+
+## 📊 Prometheus Monitoring
+- Prometheus is configured to scrape backend `metrics` exposed via /metrics endpoint (using `prom-client` Node.js lib).
+
+- Node Exporter used for infrastructure metrics.
+
+To access Prometheus:
+
+```bash
+kubectl port-forward svc/prometheus 9090:9090
+```
+Then visit: http://localhost:9090
+
+## 🔁 CI/CD Pipelines
+### ✅ GitHub Actions
+- Auto-build Docker images
+
+- Push to DockerHub
+
+- Lint, test, and deploy on `main` push
+
+### ✅ Jenkins (Self-hosted)
+Declarative Jenkins pipeline with steps:
+
+- Checkout repo
+
+- Docker build & push
+
+- Deploy via `kubectl` or `helm`
+
+Pipelines are configured in `.github/workflows`/ and `Jenkinsfile`
+
+## 🧪 Future Enhancements
+ - Group Chat Support
+
+ - Media Upload
+
+ - Redis for Caching
+
+ - Helm Charts for Production
+
+ - Grafana Dashboards
+## 🙌 Connect
+Created & maintained by Jyotiraj Aditinandan Mahanta
+
+📫 GitHub
